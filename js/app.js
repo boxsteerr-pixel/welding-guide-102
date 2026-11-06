@@ -50,6 +50,65 @@
     parent.append(heading, list);
   }
 
+  function note(value, style) {
+    const paragraph = document.createElement("p");
+    paragraph.className = `procedure-note procedure-note--${style}`;
+    paragraph.textContent = value;
+    return paragraph;
+  }
+
+  function buildMarks(marks) {
+    const layer = document.createElement("span");
+    layer.className = "figure-marks";
+    layer.setAttribute("aria-hidden", "true");
+    for (const [x, y, width, height, kind] of marks || []) {
+      const marker = document.createElement("span");
+      marker.className = kind === "arrow" ? "figure-marker figure-marker--arrow" : "figure-marker";
+      Object.assign(marker.style, { left: x + "%", top: y + "%", width: width + "%", height: height + "%" });
+      layer.append(marker);
+    }
+    return layer;
+  }
+
+  function buildFigure(figure, stepLabel) {
+    const asset = state.manual.images[figure.image];
+    const element = document.createElement("figure");
+    element.className = "procedure-figure";
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "figure-preview";
+    button.setAttribute("aria-label", `放大：${figure.caption}`);
+    const image = document.createElement("img");
+    image.src = `./assets/images/emergency/${figure.image}.jpg`;
+    image.width = asset.width;
+    image.height = asset.height;
+    image.loading = "lazy";
+    image.decoding = "async";
+    image.alt = figure.caption;
+    if (asset.flipY) image.classList.add("figure-flip-y");
+    button.append(image, buildMarks(figure.marks));
+    button.addEventListener("click", function () {
+      openImage(image, false, { button, figure, asset });
+    });
+    const caption = document.createElement("figcaption");
+    caption.textContent = `${stepLabel} · ${figure.caption} · 点击放大`;
+    element.append(button, caption);
+    return element;
+  }
+
+  function action(label, handler) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = label;
+    button.addEventListener("click", handler);
+    return button;
+  }
+
+  function focusAt(element) {
+    element.focus({ preventScroll: true });
+    element.scrollIntoView({ block: "start" });
+  }
+
   function buildEntry(item) {
     const details = document.createElement("details");
     details.className = "manual-entry";
@@ -61,30 +120,51 @@
     const title = document.createElement("span");
     title.append(text(item.title || "未命名项目"));
     summary.append(title);
+    if (item.page) {
+      details.id = `procedure-${item.id}`;
+      if (item.review) summary.append(risk);
+    }
 
     const body = document.createElement("div");
     body.className = "entry-body";
-    body.append(risk);
+    if (!item.page) body.append(risk);
+    if (item.review) body.append(note("网页核对提示 · " + item.review, "review"));
+    if (item.warning) body.append(note("原文提醒 · " + item.warning, "warning"));
+    if (item.page) body.append(note(`C102 焊机 · 原件第 ${item.page} 页`, "source"));
     if (item.summary) {
       const paragraph = document.createElement("p");
       paragraph.append(text(item.summary));
       body.append(paragraph);
     }
-    appendList(body, "检查要点", item.checks, false);
+    appendList(body, item.id === "focus-alignment" ? "原文测试要求" : "检查要点", item.checks, false);
     appendList(body, "停止并上报", item.stopConditions, false);
 
     if (Array.isArray(item.steps) && item.steps.length) {
       const heading = document.createElement("h4");
-      heading.append(text("处置步骤"));
+      heading.append(text(item.id === "limit-monitor" ? "原文画面说明" : "处置步骤"));
       body.append(heading);
+      const stepNav = document.createElement("nav");
+      stepNav.className = "procedure-nav";
+      stepNav.setAttribute("aria-label", "跳到步骤");
+      if (item.page && item.steps.length > 1) body.append(stepNav);
       item.steps.forEach(function (step, index) {
         const card = document.createElement("div");
         card.className = "step-card";
         const strong = document.createElement("strong");
-        strong.append(text(`步骤 ${index + 1} · ${step.title || "操作"}`));
+        const label = step.sourceNumber === null ? "原文说明" : `步骤 ${index + 1}`;
+        const originalNumber = step.sourceNumber && step.sourceNumber !== String(index + 1) ? `（原文 ${step.sourceNumber}）` : "";
+        strong.append(text(step.sourceNumber === null ? step.title : `${label}${originalNumber} · ${step.title || "操作"}`));
         const paragraph = document.createElement("p");
         paragraph.append(text(step.text || ""));
         card.append(strong, paragraph);
+        if (step.warning) card.append(note("原文警告 · " + step.warning, "warning"));
+        if (step.figures) {
+          const figures = document.createElement("div");
+          figures.className = `procedure-figures ${step.layout || ""}`;
+          step.figures.forEach(function (figure) { figures.append(buildFigure(figure, label)); });
+          card.append(figures);
+        }
+        if (step.confirmation) card.append(note(step.confirmation, "confirmation"));
         if (step.image) {
           const image = document.createElement("img");
           image.src = step.image;
@@ -97,7 +177,27 @@
           card.append(image, hint);
         }
         body.append(card);
+        if (item.page && item.steps.length > 1) {
+          card.tabIndex = -1;
+          const jump = action(label, function () { focusAt(card); });
+          jump.setAttribute("aria-label", `${label} · ${step.title}`);
+          stepNav.append(jump);
+        }
       });
+    }
+    if (item.page) {
+      const navigation = document.createElement("nav");
+      navigation.className = "procedure-nav";
+      navigation.setAttribute("aria-label", "手顺导航");
+      const items = state.manual.faults;
+      const index = items.indexOf(item);
+      if (index > 0) navigation.append(action("‹ 上一项", function () { showProcedure(items[index - 1].id); }));
+      navigation.append(action("返回手顺列表", function () {
+        details.open = false;
+        focusAt(document.querySelector("#faults-title"));
+      }));
+      if (index + 1 < items.length) navigation.append(action("下一项 ›", function () { showProcedure(items[index + 1].id); }));
+      body.append(navigation);
     }
     details.append(summary, body);
     return details;
@@ -109,6 +209,23 @@
 
   function searchableText(item) {
     return JSON.stringify(item).toLocaleLowerCase("zh-CN");
+  }
+
+  function showProcedure(id) {
+    if (state.query) {
+      state.query = "";
+      document.querySelector("#search-input").value = "";
+      setText("#search-summary", "");
+      renderCollection("#fault-list", state.manual.faults);
+    }
+    const target = document.getElementById(`procedure-${id}`);
+    if (target) {
+      document.querySelectorAll("#fault-list details[open]").forEach(function (entry) {
+        if (entry !== target) entry.open = false;
+      });
+      target.open = true;
+      focusAt(target.querySelector("summary"));
+    }
   }
 
   function renderCollection(selector, items, query) {
@@ -140,6 +257,8 @@
     setText("#fault-count", manual.faults.length);
     setText("#maintenance-count", manual.maintenance.length);
     setText("#safety-count", manual.safety.length);
+    setText("#procedure-review", manual.reviewNotice);
+    setText("#procedure-source", manual.source);
 
     const notices = document.querySelector("#notices");
     notices.replaceChildren();
@@ -245,13 +364,16 @@
   });
 
   window.addEventListener("popstate", function (event) {
-    if (event.state && event.state.image && imageContext) return openImage(imageContext.source, true);
+    if (event.state && event.state.image && imageContext) return openImage(imageContext.source, true, imageContext.annotation);
     if (!document.querySelector("#image-modal").hidden) return closeImage(false);
     showSection((event.state && event.state.section) || sectionFromHash(), { fromHistory: true });
   });
 
   const modal = document.querySelector("#image-modal");
   const modalImage = document.querySelector("#modal-image");
+  const modalFrame = document.querySelector(".image-modal__frame");
+  const annotationToggle = document.querySelector("#toggle-marks");
+  const detailZoom = document.querySelector("#zoom-detail");
   let imageContext = null;
   let imageHistoryClosing = false;
   let scale = 1;
@@ -261,16 +383,26 @@
   let pinchStart = null;
 
   function applyImageTransform() {
-    modalImage.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+    modalFrame.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
   }
 
   function resetImage() { scale = 1; offsetX = 0; offsetY = 0; applyImageTransform(); }
 
-  function openImage(source, fromHistory) {
-    imageContext = { source: source, x: window.scrollX, y: window.scrollY };
+  function openImage(source, fromHistory, annotation) {
+    imageContext = { source, annotation, x: window.scrollX, y: window.scrollY };
     imageHistoryClosing = false;
     modalImage.src = source.currentSrc || source.src;
     modalImage.alt = source.alt;
+    modalImage.classList.toggle("figure-flip-y", source.classList.contains("figure-flip-y"));
+    const asset = annotation && annotation.asset;
+    const previousMarks = modalFrame.querySelector(".figure-marks");
+    if (previousMarks) previousMarks.remove();
+    modalFrame.style.width = asset ? `min(100%, ${asset.width}px, ${72 * asset.width / asset.height}vh)` : "";
+    modalFrame.classList.toggle("image-modal__frame--annotated", Boolean(asset));
+    const marks = annotation && annotation.figure.marks;
+    annotationToggle.hidden = detailZoom.hidden = !marks || !marks.length;
+    annotationToggle.setAttribute("aria-pressed", "true");
+    if (marks && marks.length) modalFrame.append(buildMarks(marks));
     modal.hidden = false;
     document.body.classList.add("modal-open");
     resetImage();
@@ -291,7 +423,8 @@
     imageHistoryClosing = false;
     if (imageContext) {
       const position = imageContext;
-      if (position.source.isConnected) position.source.focus({ preventScroll: true });
+      const trigger = position.annotation ? position.annotation.button : position.source;
+      if (trigger.isConnected) trigger.focus({ preventScroll: true });
       window.scrollTo({ left: position.x, top: position.y, behavior: "instant" });
       window.requestAnimationFrame(function () {
         if (modal.hidden) window.scrollTo({ left: position.x, top: position.y, behavior: "instant" });
@@ -300,6 +433,23 @@
   }
 
   document.querySelector(".image-modal__close").addEventListener("click", function () { closeImage(); });
+  annotationToggle.addEventListener("click", function () {
+    const marks = modalFrame.querySelector(".figure-marks");
+    marks.hidden = !marks.hidden;
+    annotationToggle.setAttribute("aria-pressed", String(!marks.hidden));
+  });
+  detailZoom.addEventListener("click", function () {
+    const marks = imageContext.annotation.figure.marks;
+    const left = Math.min(...marks.map(mark => mark[0]));
+    const top = Math.min(...marks.map(mark => mark[1]));
+    const right = Math.max(...marks.map(mark => mark[0] + mark[2]));
+    const bottom = Math.max(...marks.map(mark => mark[1] + mark[3]));
+    scale = Math.min(4, 84 / Math.max(right - left, bottom - top));
+    scale = Math.max(1, scale);
+    offsetX = (.5 - (left + right) / 200) * modalFrame.offsetWidth * scale;
+    offsetY = (.5 - (top + bottom) / 200) * modalFrame.offsetHeight * scale;
+    applyImageTransform();
+  });
   modal.addEventListener("click", function (event) { if (event.target === modal) closeImage(); });
   modal.querySelectorAll("[data-zoom]").forEach(function (button) {
     button.addEventListener("click", function () {
@@ -321,6 +471,7 @@
     applyImageTransform();
   });
   modalImage.addEventListener("pointerup", function () { dragStart = null; });
+  modalImage.addEventListener("pointercancel", function () { dragStart = null; });
   modalImage.addEventListener("touchstart", function (event) {
     if (event.touches.length === 2) {
       pinchStart = Math.hypot(event.touches[0].clientX - event.touches[1].clientX, event.touches[0].clientY - event.touches[1].clientY) / scale;
@@ -334,7 +485,20 @@
     }
   }, { passive: true });
   modalImage.addEventListener("touchend", function () { pinchStart = null; }, { passive: true });
-  window.addEventListener("keydown", function (event) { if (event.key === "Escape" && !modal.hidden) closeImage(); });
+  modalImage.addEventListener("touchcancel", function () { pinchStart = null; }, { passive: true });
+  window.addEventListener("keydown", function (event) {
+    if (modal.hidden) return;
+    if (event.key === "Escape") closeImage();
+    if (event.key === "Tab") {
+      const buttons = Array.from(modal.querySelectorAll("button:not([hidden])"));
+      const first = buttons[0];
+      const last = buttons.at(-1);
+      if (event.shiftKey && document.activeElement === first || !event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        (event.shiftKey ? last : first).focus();
+      }
+    }
+  });
 
   function updateNetworkStatus() {
     const node = document.querySelector("#network-status");

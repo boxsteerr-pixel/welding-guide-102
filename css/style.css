@@ -193,6 +193,36 @@ footer { margin-top:20px; padding:16px 10px; border:1px solid #dcebf8; border-ra
 .bottom-nav button[data-section="safety"].active { color:#b56e22; background:#fff7ee; }
 .image-modal { background:rgba(4,18,35,.9); }
 .image-modal img { border-radius:10px; }
+
+.procedure-note { padding: 9px 11px; border-radius: 7px; overflow-wrap: anywhere; }
+.procedure-note:empty { display: none; }
+.procedure-note--review { border-left: 4px solid #a65b11; background: #fff3d9; color: #623204; }
+.procedure-note--warning { border-left: 4px solid #b52e32; background: #fff0ed; color: #81212a; font-weight: 700; }
+.procedure-note--confirmation { border-left: 4px solid #287460; background: #e9f6ee; color: #174e40; }
+.procedure-note--source { padding-inline: 0; color: #425975; font-size: .875rem; }
+.procedure-nav { display: flex; flex-wrap: wrap; gap: 7px; margin-block: 12px 4px; }
+.procedure-nav button { min-width: 44px; min-height: 44px; padding: 4px 9px; color: #154f7d; background: #fff; border: 1px solid #adc9de; border-radius: 7px; font-weight: 700; }
+.manual-entry[id^="procedure-"] .entry-body, .procedure-note--review { font-size: 1rem; line-height: 1.55; }
+.manual-entry[id^="procedure-"] .risk { flex: none; }
+.step-card { scroll-margin-block: 68px 80px; }
+.step-card > p { white-space: pre-line; }
+.procedure-figures { display: grid; gap: 12px; }
+.procedure-figure { min-width: 0; margin: 0; }
+.procedure-figure figcaption { padding: 5px 0 1px; color: #314c68; font-size: .875rem; }
+.figure-preview { position: relative; display: block; width: 100%; min-height: 44px; padding: 0; border: 0; border-radius: 7px; background: #eef4fa; cursor: zoom-in; }
+.step-card .figure-preview img { width: 100%; height: auto; max-height: none; margin: 0; border: 0; }
+.figure-flip-y { transform: scaleY(-1); }
+.figure-marks { position: absolute; inset: 0; pointer-events: none; }
+.figure-marker { position: absolute; border: 2px solid #ffe251; box-shadow: 0 0 0 1px #152437, inset 0 0 0 1px #152437; }
+.figure-marker--arrow { border: 0; box-shadow: none; background: #ffe251; clip-path: polygon(0 50%, 34% 4%, 34% 36%, 100% 36%, 100% 64%, 34% 64%, 34% 96%); transform: rotate(-15deg); }
+.image-modal__frame { position: relative; max-width: 100%; will-change: transform; }
+.image-modal__frame img { display: block; }
+.image-modal__frame--annotated img { width: 100%; max-height: none; }
+.image-modal__toolbar button[aria-pressed="true"] { background: #ffe251; color: #152437; }
+@media (min-width: 640px) {
+  .procedure-figures.compare { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .procedure-figures.welds { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
 button:focus-visible, input:focus-visible, summary:focus-visible { outline:3px solid #1269ad; outline-offset:3px; }
 @media (max-width:380px) {
  .hero h1 { font-size:27px; } .hero h1 small { font-size:20px; } .hero-values { font-size:14px; }
