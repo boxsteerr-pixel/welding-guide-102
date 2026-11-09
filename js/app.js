@@ -92,7 +92,19 @@
       openImage(image, false, { button, figure, asset });
     });
     const caption = document.createElement("figcaption");
-    caption.textContent = `${stepLabel} · ${figure.caption} · 点击放大`;
+    const captionText = document.createElement("span");
+    captionText.textContent = `${stepLabel} · ${figure.caption} · 点击放大`;
+    caption.append(captionText);
+    if (Array.isArray(figure.legend)) {
+      const legend = document.createElement("ul");
+      legend.className = "figure-legend";
+      figure.legend.forEach(function (description) {
+        const entry = document.createElement("li");
+        entry.textContent = description;
+        legend.append(entry);
+      });
+      caption.append(legend);
+    }
     element.append(button, caption);
     return element;
   }
@@ -394,6 +406,7 @@
     imageHistoryClosing = false;
     modalImage.src = source.currentSrc || source.src;
     modalImage.alt = source.alt;
+    modal.classList.toggle("image-modal--full-width", Boolean(annotation && annotation.figure.image === "table-annotated-reference"));
     modalImage.classList.toggle("figure-flip-y", source.classList.contains("figure-flip-y"));
     const asset = annotation && annotation.asset;
     const previousMarks = modalFrame.querySelector(".figure-marks");
