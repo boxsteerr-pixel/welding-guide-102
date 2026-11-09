@@ -38,7 +38,7 @@ for (const item of manual.faults) {
     }
   }
 }
-assert.equal(figureIds.size, 22);
+assert.equal(figureIds.size, 25);
 assert.deepEqual(figureIds, new Set(Object.keys(manual.images)));
 const hashes = await Promise.all([...figureIds].map(async (id) => {
   const bytes = await readFile(path.join(root, "assets/images/emergency", `${id}.jpg`));

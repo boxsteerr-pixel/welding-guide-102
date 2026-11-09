@@ -29,7 +29,7 @@
       ],
       "summary": "C102 焊机两台激光源冷水机都为国产件，与焊机 C 型架平行方向的是 1# 冷水机，与 C 型架运动方向垂直的是 2# 冷水机。",
       "warning": "切换阀门必须按阀门本体“指示方向标记L”与管道方向一致。切换阀门时必须扳到底，不然可能出现水回路窜流！！严禁冷却器运转情况下切换此处阀门。",
-      "review": "原文记录停机压力 1100hpa、恢复压力约 140hpa。请现场核对数值、单位及停机和恢复判据。",
+      "review": "原文记录停机压力 1100hpa、恢复压力约 140hpa。请现场核对数值、单位及停机和恢复判据。 原 PDF 中 1# 监视画面显示“铜泵运行、铝泵运行”，请现场核对停机后的实际显示。",
       "steps": [
         {
           "sourceNumber": "1",
@@ -73,26 +73,26 @@
               ]
             },
             {
-              "image": "parameters",
+              "image": "parameters-original",
               "caption": "运行参数设置 → 与焊机通讯",
               "marks": [
                 [
-                  55,
-                  64,
-                  38,
-                  17
+                  50,
+                  62,
+                  22,
+                  9
                 ]
               ]
             },
             {
-              "image": "cabinet-2",
+              "image": "cabinet-2-original",
               "caption": "与焊机通讯 → 2号冷却水柜",
               "marks": [
                 [
-                  53,
-                  42,
-                  38,
-                  15
+                  47,
+                  47,
+                  22,
+                  10
                 ]
               ]
             }
@@ -106,26 +106,26 @@
           "warning": "切换阀门必须按阀门本体“指示方向标记L”与管道方向一致。切换阀门时必须扳到底，不然可能出现水回路窜流！！严禁冷却器运转情况下切换此处阀门。",
           "figures": [
             {
-              "image": "valves-vertical",
+              "image": "valves-vertical-original",
               "caption": "切换前｜竖直 · 12 个阀门对应 1# 冷水机管路；阀体 L 标记须与管道方向一致（原文警告）",
               "marks": [
                 [
                   14,
-                  14,
-                  61,
-                  59
+                  18,
+                  55,
+                  55
                 ]
               ]
             },
             {
-              "image": "valves-horizontal",
+              "image": "valves-horizontal-original",
               "caption": "切换后｜横向 · 12 个阀门对应 2# 冷水机管路；阀体 L 标记须与管道方向一致（原文警告）",
               "marks": [
                 [
-                  8,
-                  2,
-                  73,
-                  67
+                  10,
+                  10,
+                  65,
+                  55
                 ]
               ]
             }
@@ -152,7 +152,7 @@
       ],
       "summary": "C102 焊机两台激光源冷水机都为国产件，与焊机 C 型架平行方向的是 1# 冷水机，与 C 型架运动方向垂直的是 2# 冷水机。",
       "warning": "切换阀门必须按阀门本体“指示方向标记L”与管道方向一致。切换阀门时必须扳到底，不然可能出现水回路窜流！！严禁冷却器运转情况下切换此处阀门。",
-      "review": "原文记录停机压力 1100hpa、恢复压力约 140hpa。请现场核对数值、单位及停机和恢复判据。 第 2 页原编号为 1、2、3、5、5。原文写在 2# 冷水机屏幕将通讯选到 1 号冷却水柜，需核对 HMI 操作柜及目标柜。",
+      "review": "原文记录停机压力 1100hpa、恢复压力约 140hpa。请现场核对数值、单位及停机和恢复判据。 第 2 页原编号为 1、2、3、5、5。原文写在 2# 冷水机屏幕将通讯选到 1 号冷却水柜，需核对 HMI 操作柜及目标柜。 原 PDF 第 2 页所用监控画面顶部显示“1#冷却水柜运行”，与该步骤描述的 2# 冷水机存在差异，需现场确认。",
       "steps": [
         {
           "sourceNumber": "1",
@@ -196,26 +196,26 @@
               ]
             },
             {
-              "image": "parameters",
+              "image": "parameters-original",
               "caption": "运行参数设置 → 与焊机通讯",
               "marks": [
                 [
-                  55,
-                  64,
-                  38,
-                  17
+                  50,
+                  62,
+                  22,
+                  9
                 ]
               ]
             },
             {
-              "image": "cabinet-1",
+              "image": "cabinet-1-original",
               "caption": "与焊机通讯 → 1号冷却水柜",
               "marks": [
                 [
-                  53,
-                  42,
-                  38,
-                  15
+                  49,
+                  45,
+                  23,
+                  10
                 ]
               ]
             }
@@ -229,26 +229,26 @@
           "warning": "切换阀门必须按阀门本体“指示方向标记L”与管道方向一致。切换阀门时必须扳到底，不然可能出现水回路窜流！！严禁冷却器运转情况下切换此处阀门。",
           "figures": [
             {
-              "image": "valves-horizontal",
+              "image": "valves-horizontal-original",
               "caption": "切换前｜横向 · 12 个阀门对应 2# 冷水机管路；阀体 L 标记须与管道方向一致（原文警告）",
               "marks": [
                 [
-                  8,
-                  2,
-                  73,
-                  67
+                  10,
+                  10,
+                  65,
+                  55
                 ]
               ]
             },
             {
-              "image": "valves-vertical",
+              "image": "valves-vertical-original",
               "caption": "切换后｜竖直 · 12 个阀门对应 1# 冷水机管路；阀体 L 标记须与管道方向一致（原文警告）",
               "marks": [
                 [
                   14,
-                  14,
-                  61,
-                  59
+                  18,
+                  55,
+                  55
                 ]
               ]
             }
@@ -285,6 +285,30 @@
             {
               "image": "table",
               "caption": "图 1 · 出口夹紧台控制器画面"
+            },
+            {
+              "image": "table-inlet-reference-original",
+              "caption": "入口夹钳台参考画面 · 调整关闭状态",
+              "marks": [
+                [
+                  3.8,
+                  81.8,
+                  7,
+                  6
+                ]
+              ]
+            },
+            {
+              "image": "table-outlet-reference-original",
+              "caption": "出口夹钳台参考画面 · 调整关闭状态",
+              "marks": [
+                [
+                  5.5,
+                  85.5,
+                  7,
+                  6
+                ]
+              ]
             }
           ]
         },
@@ -371,6 +395,24 @@
                   14
                 ]
               ]
+            },
+            {
+              "image": "table-outlet-reference-original",
+              "caption": "出口夹钳台参考画面 · 两侧编码器实际值（画面示例）",
+              "marks": [
+                [
+                  40,
+                  27,
+                  10,
+                  9
+                ],
+                [
+                  85,
+                  26,
+                  10,
+                  9
+                ]
+              ]
             }
           ]
         },
@@ -414,14 +456,14 @@
           "text": "在下次焊接前，打开“设备调整”，打开“打点模式”到“打开”，如下左图。焊机自动方式下，让其自动焊接，此时 QCDS 形貌如下右图。",
           "figures": [
             {
-              "image": "dot-mode",
+              "image": "dot-mode-original",
               "caption": "设备调整画面 · 打点模式及右侧状态",
               "marks": [
                 [
-                  4,
-                  76,
-                  38,
-                  10
+                  3,
+                  60,
+                  23,
+                  4
                 ]
               ]
             },
@@ -445,14 +487,14 @@
           "text": "再回到第 1 步，把“打点模式”选则“关闭”状态，选“重焊”，恢复正常生产；",
           "figures": [
             {
-              "image": "dot-mode",
+              "image": "dot-mode-original",
               "caption": "设备调整画面 · 打点模式及右侧状态",
               "marks": [
                 [
-                  4,
-                  76,
-                  38,
-                  10
+                  3,
+                  60,
+                  23,
+                  4
                 ]
               ]
             }
@@ -517,38 +559,38 @@
           "text": "限位异常时，在“状态”列会一直泛红；可以在对应行“处理”处选上，即可强制。",
           "figures": [
             {
-              "image": "limits-1",
+              "image": "limits-1-original",
               "caption": "限位监控 1 · 入口信号区的状态、报警、处理列及画面红色示例",
               "marks": [
                 [
-                  50.8,
+                  51,
                   22,
-                  7.3,
-                  2.7
+                  7,
+                  3
                 ],
                 [
-                  55.9,
-                  37.3,
-                  1.9,
-                  6.7
+                  56,
+                  37,
+                  1.5,
+                  7
                 ]
               ]
             },
             {
-              "image": "limits-2",
+              "image": "limits-2-original",
               "caption": "限位监控 2 · 中间设备信号区的状态、报警、处理列及画面红色示例",
               "marks": [
                 [
-                  20.7,
-                  23.4,
-                  7.1,
-                  2.7
+                  20.5,
+                  23,
+                  7.5,
+                  3
                 ],
                 [
-                  26.2,
-                  54.9,
-                  2.2,
-                  6.8
+                  26,
+                  55,
+                  2,
+                  6
                 ]
               ]
             }
@@ -611,13 +653,13 @@
           "text": "低头、斜向上望，手电照着，看到上喷嘴，用焊条、硬铁丝、内六角等工具，伸入上喷嘴口内进行疏通；若看到喷嘴口有粘附的焊渣，需先用捅喷嘴的工具敲敲让其掉落，防止将喷嘴口的焊渣捅入喷嘴内，注意人的身体不要探入旁边的剪刀区域内；疏通时应该可以明显手感有气流，这是正常现象；",
           "figures": [
             {
-              "image": "nozzle-upper",
+              "image": "nozzle-upper-original",
               "caption": "上喷嘴口 · 按原页箭头落点定位",
               "marks": [
                 [
-                  54,
-                  77,
-                  9,
+                  52,
+                  63,
+                  8,
                   7,
                   "arrow"
                 ]
@@ -631,12 +673,12 @@
           "text": "低头、手电照着，看到下喷嘴，和步骤 4 一样的方法疏通；",
           "figures": [
             {
-              "image": "nozzle-lower",
+              "image": "nozzle-lower-original",
               "caption": "下喷嘴口 · 按原页箭头落点定位",
               "marks": [
                 [
-                  44,
-                  47,
+                  52,
+                  63,
                   8,
                   7,
                   "arrow"
@@ -729,6 +771,24 @@
                   7
                 ]
               ]
+            },
+            {
+              "image": "chiller-doors-reference-original",
+              "caption": "原始照片 · 2# 设备上可见 3#、4# 柜门标签，柜门对应关系请现场核对",
+              "marks": [
+                [
+                  25,
+                  28.5,
+                  2,
+                  6
+                ],
+                [
+                  46.5,
+                  28.5,
+                  2,
+                  6
+                ]
+              ]
             }
           ]
         },
@@ -792,37 +852,13 @@
       "height": 761,
       "flipY": true
     },
-    "parameters": {
-      "width": 666,
-      "height": 483
-    },
-    "cabinet-2": {
-      "width": 620,
-      "height": 460
-    },
-    "valves-vertical": {
-      "width": 548,
-      "height": 759
-    },
-    "valves-horizontal": {
-      "width": 548,
-      "height": 657
-    },
     "pump-2": {
       "width": 683,
       "height": 496
     },
-    "cabinet-1": {
-      "width": 611,
-      "height": 498
-    },
     "table": {
       "width": 972,
       "height": 608
-    },
-    "dot-mode": {
-      "width": 584,
-      "height": 426
     },
     "qcds": {
       "width": 862,
@@ -847,26 +883,9 @@
       "width": 391,
       "height": 93
     },
-    "limits-1": {
-      "width": 1236,
-      "height": 927
-    },
-    "limits-2": {
-      "width": 1244,
-      "height": 933
-    },
     "gas": {
       "width": 936,
       "height": 464
-    },
-    "nozzle-upper": {
-      "width": 512,
-      "height": 642,
-      "flipY": true
-    },
-    "nozzle-lower": {
-      "width": 454,
-      "height": 501
     },
     "chillers": {
       "width": 2580,
@@ -875,6 +894,58 @@
     "tank": {
       "width": 2589,
       "height": 1456
+    },
+    "valves-vertical-original": {
+      "width": 3072,
+      "height": 4096
+    },
+    "valves-horizontal-original": {
+      "width": 3072,
+      "height": 4096
+    },
+    "parameters-original": {
+      "width": 4096,
+      "height": 3072
+    },
+    "cabinet-1-original": {
+      "width": 4096,
+      "height": 3072
+    },
+    "cabinet-2-original": {
+      "width": 4096,
+      "height": 3072
+    },
+    "dot-mode-original": {
+      "width": 4096,
+      "height": 3072
+    },
+    "limits-1-original": {
+      "width": 4096,
+      "height": 3072
+    },
+    "limits-2-original": {
+      "width": 4096,
+      "height": 3072
+    },
+    "nozzle-upper-original": {
+      "width": 3072,
+      "height": 4096
+    },
+    "nozzle-lower-original": {
+      "width": 3072,
+      "height": 4096
+    },
+    "table-inlet-reference-original": {
+      "width": 4096,
+      "height": 3072
+    },
+    "table-outlet-reference-original": {
+      "width": 4096,
+      "height": 3072
+    },
+    "chiller-doors-reference-original": {
+      "width": 4096,
+      "height": 3072
     }
   }
 }
