@@ -71,7 +71,7 @@
     return layer;
   }
 
-  function buildFigure(figure, stepLabel) {
+  function buildFigure(figure, stepLabel, item) {
     const asset = state.manual.images[figure.image];
     const element = document.createElement("figure");
     element.className = "procedure-figure";
@@ -89,7 +89,8 @@
     if (asset.flipY) image.classList.add("figure-flip-y");
     button.append(image, buildMarks(figure.marks));
     button.addEventListener("click", function () {
-      openImage(image, false, { button, figure, asset });
+      const procedure = figure.image === "table-annotated-reference" ? item : null;
+      openImage(image, false, { button, figure, asset, procedure });
     });
     const caption = document.createElement("figcaption");
     const captionText = document.createElement("span");
@@ -174,7 +175,7 @@
         if (step.figures) {
           const figures = document.createElement("div");
           figures.className = `procedure-figures ${step.layout || ""}`;
-          step.figures.forEach(function (figure) { figures.append(buildFigure(figure, label)); });
+          step.figures.forEach(function (figure) { figures.append(buildFigure(figure, label, item)); });
           card.append(figures);
         }
         if (step.confirmation) card.append(note(step.confirmation, "confirmation"));
@@ -385,6 +386,7 @@
   const modal = document.querySelector("#image-modal");
   const modalImage = document.querySelector("#modal-image");
   const modalFrame = document.querySelector(".image-modal__frame");
+  const modalProcedure = document.querySelector("#image-modal-procedure");
   const annotationToggle = document.querySelector("#toggle-marks");
   const detailZoom = document.querySelector("#zoom-detail");
   let imageContext = null;
@@ -406,18 +408,30 @@
     imageHistoryClosing = false;
     modalImage.src = source.currentSrc || source.src;
     modalImage.alt = source.alt;
-    modal.classList.toggle("image-modal--full-width", Boolean(annotation && annotation.figure.image === "table-annotated-reference"));
+    const procedure = annotation && annotation.procedure;
+    modal.classList.toggle("image-modal--with-procedure", Boolean(procedure));
+    modalProcedure.hidden = !procedure;
+    modalProcedure.replaceChildren();
+    if (procedure) {
+      appendList(modalProcedure, "完整操作步骤", procedure.steps, true);
+      if (procedure.warning) {
+        const reminder = document.createElement("div");
+        reminder.textContent = procedure.warning;
+        modalProcedure.append(reminder);
+      }
+    }
     modalImage.classList.toggle("figure-flip-y", source.classList.contains("figure-flip-y"));
     const asset = annotation && annotation.asset;
     const previousMarks = modalFrame.querySelector(".figure-marks");
     if (previousMarks) previousMarks.remove();
-    modalFrame.style.width = asset ? `min(100%, ${asset.width}px, ${72 * asset.width / asset.height}vh)` : "";
+    modalFrame.style.width = asset ? `min(100%, ${asset.width}px, ${(procedure ? 42 : 72) * asset.width / asset.height}vh)` : "";
     modalFrame.classList.toggle("image-modal__frame--annotated", Boolean(asset));
     const marks = annotation && annotation.figure.marks;
     annotationToggle.hidden = detailZoom.hidden = !marks || !marks.length;
     annotationToggle.setAttribute("aria-pressed", "true");
     if (marks && marks.length) modalFrame.append(buildMarks(marks));
     modal.hidden = false;
+    modalProcedure.scrollTop = 0;
     document.body.classList.add("modal-open");
     resetImage();
     if (!fromHistory) history.pushState({ image: true, section: state.section }, "", location.href);
@@ -504,7 +518,7 @@
     if (modal.hidden) return;
     if (event.key === "Escape") closeImage();
     if (event.key === "Tab") {
-      const buttons = Array.from(modal.querySelectorAll("button:not([hidden])"));
+      const buttons = Array.from(modal.querySelectorAll("button:not([hidden]), #image-modal-procedure:not([hidden])"));
       const first = buttons[0];
       const last = buttons.at(-1);
       if (event.shiftKey && document.activeElement === first || !event.shiftKey && document.activeElement === last) {
