@@ -227,6 +227,8 @@ footer { margin-top:20px; padding:16px 10px; border:1px solid #dcebf8; border-ra
 .image-modal__frame { position: relative; max-width: 100%; will-change: transform; }
 .image-modal__frame img { display: block; }
 .image-modal__frame--annotated img { width: 100%; max-height: none; }
+.image-modal--with-procedure .image-modal__frame,
+.image-modal--with-procedure img { will-change: auto; }
 .image-modal__toolbar button[aria-pressed="true"] { background: #ffe251; color: #152437; }
 @media (min-width: 640px) {
   .procedure-figures.compare { grid-template-columns: repeat(2, minmax(0, 1fr)); }
