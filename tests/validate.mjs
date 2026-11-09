@@ -22,7 +22,7 @@ assert.deepEqual(manual.faults.map(({id, page, steps}) => [id, page, steps.lengt
 ]);
 assert.deepEqual(manual.faults[1].steps.map(step => step.sourceNumber), ["1", "2", "3", "5", "5"]);
 assert.deepEqual(manual.faults[3].steps.map(step => step.sourceNumber), ["1", "3", "4", "5"]);
-assert.match(manual.faults[4].review, /现场安全审核并取得授权/);
+assert.ok(manual.faults.every(item => !Object.hasOwn(item, "review")));
 assert.match(manual.faults[5].warning, /两个安全销/);
 const figureIds = new Set();
 for (const item of manual.faults) {
@@ -31,9 +31,10 @@ for (const item of manual.faults) {
     for (const figure of step.figures || []) {
       assert.ok(figure.caption && Object.hasOwn(manual.images, figure.image));
       figureIds.add(figure.image);
-      for (const [x, y, w, h, kind] of figure.marks || []) {
+      for (const [x, y, w, h, kind, angle] of figure.marks || []) {
         assert.ok(x >= 0 && y >= 0 && w > 0 && h > 0 && x + w <= 100 && y + h <= 100);
-        assert.ok(kind === undefined || kind === "arrow" || kind === "circle");
+        assert.ok(kind === undefined || ["box", "arrow", "circle"].includes(kind));
+        assert.ok(angle === undefined || Number.isFinite(angle));
       }
     }
   }
@@ -45,11 +46,12 @@ const hashes = await Promise.all([...figureIds].map(async (id) => {
   return createHash("sha256").update(bytes).digest("hex");
 }));
 assert.equal(new Set(hashes).size, figureIds.size, "重复原图应复用资源");
-assert.deepEqual(manual.maintenance, []);
+assert.deepEqual(manual.maintenance.map(item => item.procedureId), ["clear-nozzle", "coolant-refill"]);
+assert.ok(manual.maintenance.every(item => manual.faults.some(procedure => procedure.id === item.procedureId)));
 assert.deepEqual(manual.safety, []);
 assert.equal(manifest.start_url, "./");
 assert.equal(manifest.scope, "./");
-assert.match(sw, /const CACHE_NAME = "welding-guide-102-v18"/);
+assert.match(sw, /const CACHE_NAME = "welding-guide-102-v22"/);
 for (const [, asset] of html.matchAll(/(?:src|href)="(\.\/[^"]+\?v=\d+)"/g)) {
   assert.ok(sw.includes(JSON.stringify(asset)), `离线缓存须包含 ${asset}`);
 }

@@ -3,7 +3,6 @@
 
   const state = { manual: null, section: "home", query: "", deferredInstallPrompt: null };
   const sectionNames = ["home", "faults", "maintenance", "safety"];
-  const riskLabels = { high: "高风险", medium: "注意", low: "一般" };
 
   function text(value) {
     return document.createTextNode(value == null ? "" : String(value));
@@ -74,10 +73,11 @@
     const layer = document.createElement("span");
     layer.className = "figure-marks";
     layer.setAttribute("aria-hidden", "true");
-    for (const [x, y, width, height, kind] of marks || []) {
+    for (const [x, y, width, height, kind, angle] of marks || []) {
       const marker = document.createElement("span");
       marker.className = "figure-marker";
       if (kind === "arrow" || kind === "circle") marker.classList.add(`figure-marker--${kind}`);
+      if (angle) marker.style.rotate = `${angle}deg`;
       Object.assign(marker.style, { left: x + "%", top: y + "%", width: width + "%", height: height + "%" });
       layer.append(marker);
     }
@@ -138,27 +138,20 @@
     element.scrollIntoView({ block: "start" });
   }
 
-  function buildEntry(item) {
+  function buildEntry(item, inMaintenance) {
     const details = document.createElement("details");
     details.className = "manual-entry";
-    details.dataset.risk = item.risk || "medium";
     const summary = document.createElement("summary");
-    const risk = document.createElement("span");
-    risk.className = `risk ${item.risk || "medium"}`;
-    risk.append(text(riskLabels[item.risk] || riskLabels.medium));
     const title = document.createElement("span");
     title.append(text(item.title || "未命名项目"));
     summary.append(title);
     if (item.page) {
-      details.id = `procedure-${item.id}`;
-      if (item.review) summary.append(risk);
+      details.id = `procedure-${inMaintenance ? "maintenance-" : ""}${item.id}`;
     }
 
     const body = document.createElement("div");
     body.className = "entry-body";
-    if (!item.page) body.append(risk);
-    if (item.review) body.append(note("网页核对提示 · " + item.review, "review"));
-    if (item.warning) body.append(note("原文提醒 · " + item.warning, "warning"));
+    if (item.warning) body.append(note(item.warning, "warning"));
     if (item.page) body.append(note(`C102 焊机 · 原件第 ${item.page} 页`, "source"));
     if (item.summary) {
       const paragraph = document.createElement("p");
@@ -219,14 +212,14 @@
       const navigation = document.createElement("nav");
       navigation.className = "procedure-nav";
       navigation.setAttribute("aria-label", "手顺导航");
-      const items = state.manual.faults;
+      const items = inMaintenance ? [] : state.manual.faults;
       const index = items.indexOf(item);
       if (index > 0) navigation.append(action("‹ 上一项", function () { showProcedure(items[index - 1].id); }));
       navigation.append(action("返回手顺列表", function () {
         details.open = false;
-        focusAt(document.querySelector("#faults-title"));
+        focusAt(document.querySelector(inMaintenance ? "#maintenance-title" : "#faults-title"));
       }));
-      if (index + 1 < items.length) navigation.append(action("下一项 ›", function () { showProcedure(items[index + 1].id); }));
+      if (index >= 0 && index + 1 < items.length) navigation.append(action("下一项 ›", function () { showProcedure(items[index + 1].id); }));
       body.append(navigation);
     }
     details.append(summary, body);
@@ -270,7 +263,7 @@
         container.querySelector("p").textContent = "请尝试其他关键词，或清空搜索查看全部项目。";
       }
     }
-    else filtered.forEach(function (item) { container.append(buildEntry(item)); });
+    else filtered.forEach(function (item) { container.append(buildEntry(item, selector === "#maintenance-list")); });
     return filtered.length;
   }
 
@@ -285,9 +278,11 @@
     setText("#footer-machine", machine.machineName);
     setText("#footer-version", machine.manualVersion);
     setText("#fault-count", manual.faults.length);
-    setText("#maintenance-count", manual.maintenance.length);
+    const maintenance = manual.maintenance.map(function (item) {
+      return item.procedureId ? manual.faults.find(procedure => procedure.id === item.procedureId) : item;
+    }).filter(Boolean);
+    setText("#maintenance-count", maintenance.length);
     setText("#safety-count", manual.safety.length);
-    setText("#procedure-review", manual.reviewNotice);
     setText("#procedure-source", manual.source);
 
     const notices = document.querySelector("#notices");
@@ -324,7 +319,7 @@
       const button = document.createElement("button"); button.type = "button"; button.dataset.keyword = word; button.append(text(word)); keywords.append(button);
     });
     if (!keywords.childNodes.length) keywords.append(text("内容录入后显示快捷关键词"));
-    renderCollection("#maintenance-list", manual.maintenance);
+    renderCollection("#maintenance-list", maintenance);
     renderCollection("#safety-list", manual.safety);
   }
 

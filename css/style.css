@@ -221,9 +221,23 @@ footer { margin-top:20px; padding:16px 10px; border:1px solid #dcebf8; border-ra
 .step-card .figure-preview img { width: 100%; height: auto; max-height: none; margin: 0; border: 0; }
 .figure-flip-y { transform: scaleY(-1); }
 .figure-marks { position: absolute; inset: 0; pointer-events: none; }
-.figure-marker { position: absolute; border: 2px solid #ffe251; box-shadow: 0 0 0 1px #152437, inset 0 0 0 1px #152437; }
-.figure-marker--arrow { border: 0; box-shadow: none; background: #ffe251; clip-path: polygon(0 50%, 34% 4%, 34% 36%, 100% 36%, 100% 64%, 34% 64%, 34% 96%); transform: rotate(-15deg); }
-.figure-marker--circle { border-radius: 50%; }
+.figure-marker {
+  --mark-color: #fff04a;
+  --mark-corner: linear-gradient(var(--mark-color), var(--mark-color));
+  position: absolute;
+  background:
+    var(--mark-corner) top left / 32% 3px no-repeat,
+    var(--mark-corner) top left / 3px 32% no-repeat,
+    var(--mark-corner) top right / 32% 3px no-repeat,
+    var(--mark-corner) top right / 3px 32% no-repeat,
+    var(--mark-corner) bottom left / 32% 3px no-repeat,
+    var(--mark-corner) bottom left / 3px 32% no-repeat,
+    var(--mark-corner) bottom right / 32% 3px no-repeat,
+    var(--mark-corner) bottom right / 3px 32% no-repeat;
+  filter: drop-shadow(0 0 1px #142033) drop-shadow(0 1px 1px #142033);
+}
+.figure-marker--arrow { background: var(--mark-color); clip-path: polygon(0 50%, 34% 4%, 34% 36%, 100% 36%, 100% 64%, 34% 64%, 34% 96%); transform: rotate(-15deg); }
+.figure-marker--circle { background: none; border: 3px solid var(--mark-color); border-radius: 50%; }
 .image-modal__frame { position: relative; max-width: 100%; will-change: transform; }
 .image-modal__frame img { display: block; }
 .image-modal__frame--annotated img { width: 100%; max-height: none; }
