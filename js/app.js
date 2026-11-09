@@ -37,14 +37,27 @@
     if (searchPanel) searchPanel.hidden = name !== "home" && name !== "faults";
   }
 
-  function appendList(parent, title, values, ordered) {
+  function appendTableControls(parent, value) {
+    const parts = value.split(/(\b[A-I]\b|调整\s*(?:打开\/关闭|开\/关)|到剪切位|剪切位|截止阀|锁定轴|编码器实际值)/g);
+    parts.forEach(function (part, index) {
+      if (index % 2 === 0) {
+        parent.append(text(part));
+        return;
+      }
+      const emphasis = document.createElement("strong");
+      emphasis.textContent = part;
+      parent.append(emphasis);
+    });
+  }
+
+  function appendList(parent, title, values, ordered, appendValue = (element, value) => element.append(text(value))) {
     if (!Array.isArray(values) || !values.length) return;
     const heading = document.createElement("h4");
     heading.append(text(title));
     const list = document.createElement(ordered ? "ol" : "ul");
     values.forEach(function (value) {
       const li = document.createElement("li");
-      li.append(text(typeof value === "string" ? value : value.text));
+      appendValue(li, typeof value === "string" ? value : value.text);
       list.append(li);
     });
     parent.append(heading, list);
@@ -101,7 +114,9 @@
       legend.className = "figure-legend";
       figure.legend.forEach(function (description) {
         const entry = document.createElement("li");
-        entry.textContent = description;
+        const emphasis = document.createElement("strong");
+        emphasis.textContent = description;
+        entry.append(emphasis);
         legend.append(entry);
       });
       caption.append(legend);
@@ -169,7 +184,8 @@
         const originalNumber = step.sourceNumber && step.sourceNumber !== String(index + 1) ? `（原文 ${step.sourceNumber}）` : "";
         strong.append(text(step.sourceNumber === null ? step.title : `${label}${originalNumber} · ${step.title || "操作"}`));
         const paragraph = document.createElement("p");
-        paragraph.append(text(step.text || ""));
+        if (item.id === "table-jam") appendTableControls(paragraph, step.text || "");
+        else paragraph.append(text(step.text || ""));
         card.append(strong, paragraph);
         if (step.warning) card.append(note("原文警告 · " + step.warning, "warning"));
         if (step.figures) {
@@ -413,7 +429,7 @@
     modalProcedure.hidden = !procedure;
     modalProcedure.replaceChildren();
     if (procedure) {
-      appendList(modalProcedure, "完整操作步骤", procedure.steps, true);
+      appendList(modalProcedure, "完整操作步骤", procedure.steps, true, appendTableControls);
       if (procedure.warning) {
         const reminder = document.createElement("div");
         reminder.textContent = procedure.warning;
