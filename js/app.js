@@ -63,7 +63,8 @@
     layer.setAttribute("aria-hidden", "true");
     for (const [x, y, width, height, kind] of marks || []) {
       const marker = document.createElement("span");
-      marker.className = kind === "arrow" ? "figure-marker figure-marker--arrow" : "figure-marker";
+      marker.className = "figure-marker";
+      if (kind === "arrow" || kind === "circle") marker.classList.add(`figure-marker--${kind}`);
       Object.assign(marker.style, { left: x + "%", top: y + "%", width: width + "%", height: height + "%" });
       layer.append(marker);
     }

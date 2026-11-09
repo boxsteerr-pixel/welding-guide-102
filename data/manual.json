@@ -658,14 +658,14 @@
           "figures": [
             {
               "image": "nozzle-upper-original",
-              "caption": "上喷嘴口 · 按原页箭头落点定位",
+              "caption": "上喷嘴口 · 圈选位置参照原手顺",
               "marks": [
                 [
+                  48,
                   61,
-                  65,
-                  9,
-                  5,
-                  "arrow"
+                  12,
+                  12,
+                  "circle"
                 ]
               ]
             }
@@ -678,14 +678,14 @@
           "figures": [
             {
               "image": "nozzle-lower-original",
-              "caption": "下喷嘴口 · 按原页箭头落点定位",
+              "caption": "下喷嘴口 · 圈选位置参照原手顺",
               "marks": [
                 [
-                  62,
-                  60,
-                  9,
-                  5,
-                  "arrow"
+                  45,
+                  54,
+                  16,
+                  16,
+                  "circle"
                 ]
               ]
             }

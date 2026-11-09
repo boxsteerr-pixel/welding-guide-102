@@ -215,6 +215,7 @@ footer { margin-top:20px; padding:16px 10px; border:1px solid #dcebf8; border-ra
 .figure-marks { position: absolute; inset: 0; pointer-events: none; }
 .figure-marker { position: absolute; border: 2px solid #ffe251; box-shadow: 0 0 0 1px #152437, inset 0 0 0 1px #152437; }
 .figure-marker--arrow { border: 0; box-shadow: none; background: #ffe251; clip-path: polygon(0 50%, 34% 4%, 34% 36%, 100% 36%, 100% 64%, 34% 64%, 34% 96%); transform: rotate(-15deg); }
+.figure-marker--circle { border-radius: 50%; }
 .image-modal__frame { position: relative; max-width: 100%; will-change: transform; }
 .image-modal__frame img { display: block; }
 .image-modal__frame--annotated img { width: 100%; max-height: none; }

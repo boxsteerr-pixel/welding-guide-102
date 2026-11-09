@@ -33,7 +33,7 @@ for (const item of manual.faults) {
       figureIds.add(figure.image);
       for (const [x, y, w, h, kind] of figure.marks || []) {
         assert.ok(x >= 0 && y >= 0 && w > 0 && h > 0 && x + w <= 100 && y + h <= 100);
-        assert.ok(kind === undefined || kind === "arrow");
+        assert.ok(kind === undefined || kind === "arrow" || kind === "circle");
       }
     }
   }
@@ -49,7 +49,7 @@ assert.deepEqual(manual.maintenance, []);
 assert.deepEqual(manual.safety, []);
 assert.equal(manifest.start_url, "./");
 assert.equal(manifest.scope, "./");
-assert.match(sw, /const CACHE_NAME = "welding-guide-102-v13"/);
+assert.match(sw, /const CACHE_NAME = "welding-guide-102-v14"/);
 for (const [, asset] of html.matchAll(/(?:src|href)="(\.\/[^"]+\?v=\d+)"/g)) {
   assert.ok(sw.includes(JSON.stringify(asset)), `离线缓存须包含 ${asset}`);
 }
