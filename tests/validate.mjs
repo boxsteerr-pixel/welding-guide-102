@@ -17,7 +17,7 @@ assert.equal(manual.machine.machineName, "102激光焊机");
 assert.equal(manual.machine.manualVersion, "0.2.0");
 assert.deepEqual(manual.faults.map(({id, page, steps}) => [id, page, steps.length]), [
   ["chiller-1-to-2", "1", 5], ["chiller-2-to-1", "2", 5],
-  ["table-jam", "3", 4], ["focus-alignment", "4", 4],
+  ["table-jam", "3", 6], ["focus-alignment", "4", 4],
   ["limit-monitor", "5", 1], ["clear-nozzle", "6", 8], ["coolant-refill", "7", 7]
 ]);
 assert.deepEqual(manual.faults[1].steps.map(step => step.sourceNumber), ["1", "2", "3", "5", "5"]);
@@ -38,7 +38,7 @@ for (const item of manual.faults) {
     }
   }
 }
-assert.equal(figureIds.size, 26);
+assert.equal(figureIds.size, 24);
 assert.deepEqual(figureIds, new Set(Object.keys(manual.images)));
 const hashes = await Promise.all([...figureIds].map(async (id) => {
   const bytes = await readFile(path.join(root, "assets/images/emergency", `${id}.${manual.images[id].format || "jpg"}`));

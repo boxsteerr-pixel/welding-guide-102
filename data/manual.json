@@ -289,136 +289,24 @@
             {
               "image": "table-annotated-reference",
               "caption": "A～I 位置标注参考图 · 画面状态及按钮显示以现场实际画面为准"
-            },
-            {
-              "image": "table-inlet-reference-original",
-              "caption": "入口夹钳台参考画面 · 调整关闭状态",
-              "marks": [
-                [
-                  3.8,
-                  81.8,
-                  7,
-                  6
-                ]
-              ]
-            },
-            {
-              "image": "table-outlet-reference-original",
-              "caption": "出口夹钳台参考画面 · 调整关闭状态",
-              "marks": [
-                [
-                  5.5,
-                  85.5,
-                  7,
-                  6
-                ]
-              ]
             }
           ]
         },
         {
           "sourceNumber": "2",
-          "title": "手动调整并比较两侧编码器实际值",
-          "text": "操作工手动调整，按图 1 画面内，\n单击打开 C“调整 开/关”；\n单独点动一侧：打开需要调整一侧的截止阀（如 E 或 H），按 D“到剪切位”或 G“到剪切位”点动调整（调整一侧时，务必通过 F、I 框内把不调整的另外一侧锁定轴，锁定轴就是此侧不动），观察 A 和 B 对接台两侧编码器实际值之差在 8mm 之内后停止调整；\n然后取消之前“锁定轴”，关闭打开的截止阀 E、H，再单击关闭 C“调整 开/关”；",
-          "confirmation": "停止调整条件（原文）：两侧编码器实际值之差在 8mm 之内。",
-          "figures": [
-            {
-              "image": "table",
-              "caption": "C · 调整开/关",
-              "marks": [
-                [
-                  0.5,
-                  88,
-                  10,
-                  10
-                ]
-              ]
-            },
-            {
-              "image": "table",
-              "caption": "D / E · 左侧到剪切位 / 截止阀；I · 右侧锁定轴",
-              "marks": [
-                [
-                  18,
-                  69,
-                  8,
-                  9
-                ],
-                [
-                  37,
-                  65,
-                  14,
-                  9
-                ],
-                [
-                  88,
-                  89,
-                  9,
-                  10
-                ]
-              ]
-            },
-            {
-              "image": "table",
-              "caption": "G / H · 右侧到剪切位 / 截止阀；F · 左侧锁定轴",
-              "marks": [
-                [
-                  69,
-                  69,
-                  8,
-                  9
-                ],
-                [
-                  88,
-                  66,
-                  12,
-                  8
-                ],
-                [
-                  38,
-                  89,
-                  9,
-                  10
-                ]
-              ]
-            },
-            {
-              "image": "table",
-              "caption": "A / B · 两侧编码器实际值，比较差值",
-              "marks": [
-                [
-                  38,
-                  16,
-                  12,
-                  13
-                ],
-                [
-                  90,
-                  15,
-                  10,
-                  14
-                ]
-              ]
-            },
-            {
-              "image": "table-outlet-reference-original",
-              "caption": "出口夹钳台参考画面 · 两侧编码器实际值（画面示例）",
-              "marks": [
-                [
-                  40,
-                  27,
-                  10,
-                  9
-                ],
-                [
-                  85,
-                  26,
-                  10,
-                  9
-                ]
-              ]
-            }
-          ]
+          "title": "打开 C 调整开关",
+          "text": "操作工手动调整，按图 1 画面内，\n单击打开 C“调整 开/关”；"
+        },
+        {
+          "sourceNumber": "2",
+          "title": "点动一侧并观察 A、B",
+          "text": "单独点动一侧：打开需要调整一侧的截止阀（如 E 或 H），按 D“到剪切位”或 G“到剪切位”点动调整（调整一侧时，务必通过 F、I 框内把不调整的另外一侧锁定轴，锁定轴就是此侧不动），观察 A 和 B 对接台两侧编码器实际值之差在 8mm 之内后停止调整；",
+          "confirmation": "停止调整条件（原文）：两侧编码器实际值之差在 8mm 之内。"
+        },
+        {
+          "sourceNumber": "2",
+          "title": "取消锁定并关闭调整",
+          "text": "然后取消之前“锁定轴”，关闭打开的截止阀 E、H，再单击关闭 C“调整 开/关”；"
         },
         {
           "sourceNumber": "3",
@@ -938,14 +826,6 @@
     "nozzle-lower-original": {
       "width": 3072,
       "height": 4096
-    },
-    "table-inlet-reference-original": {
-      "width": 4096,
-      "height": 3072
-    },
-    "table-outlet-reference-original": {
-      "width": 4096,
-      "height": 3072
     },
     "chiller-doors-reference-original": {
       "width": 4096,
