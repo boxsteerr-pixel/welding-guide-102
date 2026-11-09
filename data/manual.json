@@ -287,6 +287,10 @@
               "caption": "图 1 · 出口夹紧台控制器画面"
             },
             {
+              "image": "table-annotated-reference",
+              "caption": "A～I 位置标注参考图 · 画面状态及按钮显示以现场实际画面为准"
+            },
+            {
               "image": "table-inlet-reference-original",
               "caption": "入口夹钳台参考画面 · 调整关闭状态",
               "marks": [
@@ -946,6 +950,11 @@
     "chiller-doors-reference-original": {
       "width": 4096,
       "height": 3072
+    },
+    "table-annotated-reference": {
+      "width": 1448,
+      "height": 1086,
+      "format": "png"
     }
   }
 }

@@ -79,7 +79,7 @@
     button.className = "figure-preview";
     button.setAttribute("aria-label", `放大：${figure.caption}`);
     const image = document.createElement("img");
-    image.src = `./assets/images/emergency/${figure.image}.jpg`;
+    image.src = `./assets/images/emergency/${figure.image}.${asset.format || "jpg"}`;
     image.width = asset.width;
     image.height = asset.height;
     image.loading = "lazy";

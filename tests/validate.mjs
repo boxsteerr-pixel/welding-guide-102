@@ -38,10 +38,10 @@ for (const item of manual.faults) {
     }
   }
 }
-assert.equal(figureIds.size, 25);
+assert.equal(figureIds.size, 26);
 assert.deepEqual(figureIds, new Set(Object.keys(manual.images)));
 const hashes = await Promise.all([...figureIds].map(async (id) => {
-  const bytes = await readFile(path.join(root, "assets/images/emergency", `${id}.jpg`));
+  const bytes = await readFile(path.join(root, "assets/images/emergency", `${id}.${manual.images[id].format || "jpg"}`));
   return createHash("sha256").update(bytes).digest("hex");
 }));
 assert.equal(new Set(hashes).size, figureIds.size, "重复原图应复用资源");
@@ -49,7 +49,7 @@ assert.deepEqual(manual.maintenance, []);
 assert.deepEqual(manual.safety, []);
 assert.equal(manifest.start_url, "./");
 assert.equal(manifest.scope, "./");
-assert.match(sw, /const CACHE_NAME = "welding-guide-102-v12"/);
+assert.match(sw, /const CACHE_NAME = "welding-guide-102-v13"/);
 for (const [, asset] of html.matchAll(/(?:src|href)="(\.\/[^"]+\?v=\d+)"/g)) {
   assert.ok(sw.includes(JSON.stringify(asset)), `离线缓存须包含 ${asset}`);
 }
