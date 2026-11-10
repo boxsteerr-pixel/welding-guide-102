@@ -14,18 +14,18 @@ const manifest = JSON.parse(manifestText);
 
 assert.equal(manual.machine.machineId, "102");
 assert.equal(manual.machine.machineName, "102激光焊机");
-assert.equal(manual.machine.manualVersion, "0.2.1");
+assert.equal(manual.machine.manualVersion, "0.2.2");
 assert.deepEqual(manual.faults.map(({id, page, steps}) => [id, page, steps.length]), [
   ["chiller-1-to-2", "1", 5], ["chiller-2-to-1", "2", 5],
   ["table-jam", "3", 6], ["focus-alignment", "4", 4],
-  ["limit-monitor", "5", 1], ["clear-nozzle", "6", 8], ["coolant-refill", "7", 7]
+  ["limit-monitor", "5", 1]
 ]);
 assert.deepEqual(manual.faults[1].steps.map(step => step.sourceNumber), ["1", "2", "3", "5", "5"]);
 assert.deepEqual(manual.faults[3].steps.map(step => step.sourceNumber), ["1", "3", "4", "5"]);
 assert.ok(manual.faults.every(item => !Object.hasOwn(item, "review")));
-assert.match(manual.faults[5].warning, /两个安全销/);
+assert.match(manual.maintenance[0].warning, /两个安全销/);
 const figureIds = new Set();
-for (const item of manual.faults) {
+for (const item of [...manual.faults, ...manual.maintenance]) {
   for (const step of item.steps) {
     assert.ok(step.text);
     for (const figure of step.figures || []) {
@@ -46,12 +46,13 @@ const hashes = await Promise.all([...figureIds].map(async (id) => {
   return createHash("sha256").update(bytes).digest("hex");
 }));
 assert.equal(new Set(hashes).size, figureIds.size, "重复原图应复用资源");
-assert.deepEqual(manual.maintenance.map(item => item.procedureId), ["clear-nozzle", "coolant-refill"]);
-assert.ok(manual.maintenance.every(item => manual.faults.some(procedure => procedure.id === item.procedureId)));
+assert.deepEqual(manual.maintenance.map(({id, page, steps}) => [id, page, steps.length]), [
+  ["clear-nozzle", "6", 8], ["coolant-refill", "7", 7]
+]);
 assert.deepEqual(manual.safety, []);
 assert.equal(manifest.start_url, "./");
 assert.equal(manifest.scope, "./");
-assert.match(sw, /const CACHE_NAME = "welding-guide-102-v25"/);
+assert.match(sw, /const CACHE_NAME = "welding-guide-102-v26"/);
 for (const [, asset] of html.matchAll(/(?:src|href)="(\.\/[^"]+\?v=\d+)"/g)) {
   assert.ok(sw.includes(JSON.stringify(asset)), `离线缓存须包含 ${asset}`);
 }

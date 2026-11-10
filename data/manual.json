@@ -4,7 +4,7 @@
     "machineId": "102",
     "machineName": "102激光焊机",
     "manualTitle": "操作工快速处置手册",
-    "manualVersion": "0.2.1",
+    "manualVersion": "0.2.2",
     "contentStatus": "应急手顺",
     "lastUpdated": "2026-11-06"
   },
@@ -496,7 +496,9 @@
           ]
         }
       ]
-    },
+    }
+  ],
+  "maintenance": [
     {
       "id": "clear-nozzle",
       "page": "6",
@@ -726,23 +728,13 @@
       ]
     }
   ],
-  "maintenance": [
-    {
-      "procedureId": "clear-nozzle"
-    },
-    {
-      "procedureId": "coolant-refill"
-    }
-  ],
   "safety": [],
   "source": "《交C102焊机操作工应急操作手顺20261105.pdf》｜焊接管理组，原件落款 20261022",
   "quickKeywords": [
     "冷水机",
     "TABLE JAM",
     "打点模式",
-    "限位强制",
-    "喷嘴",
-    "加水"
+    "限位强制"
   ],
   "images": {
     "pump-1": {
