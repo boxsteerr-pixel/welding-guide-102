@@ -94,8 +94,26 @@
     button.setAttribute("aria-label", `放大：${figure.caption}`);
     const image = document.createElement("img");
     const original = `./assets/images/emergency/${figure.image}.${asset.format || "jpg"}`;
-    image.src = asset.preview ? `./assets/images/emergency/${asset.preview}` : original;
+    const preview = asset.preview ? `./assets/images/emergency/${asset.preview}` : original;
     if (asset.preview) image.dataset.originalSrc = original;
+    const retry = document.createElement("button");
+    retry.type = "button";
+    retry.hidden = true;
+    retry.textContent = "图片加载失败，点击重试";
+    function loadPreview() {
+      retry.hidden = true;
+      image.onerror = function () {
+        if (asset.preview && !image.dataset.triedOriginal) {
+          image.dataset.triedOriginal = "true";
+          image.src = original;
+        } else {
+          retry.hidden = false;
+        }
+      };
+      delete image.dataset.triedOriginal;
+      image.src = preview;
+    }
+    retry.addEventListener("click", loadPreview);
     image.width = asset.width;
     image.height = asset.height;
     image.loading = "lazy";
@@ -123,7 +141,8 @@
       });
       caption.append(legend);
     }
-    element.append(button, caption);
+    element.append(button, caption, retry);
+    loadPreview();
     return element;
   }
 
@@ -420,11 +439,14 @@
     imageContext = { source, annotation, x: window.scrollX, y: window.scrollY };
     imageHistoryClosing = false;
     const preview = source.currentSrc || source.src;
-    modalImage.onerror = source.dataset.originalSrc ? function () {
-      modalImage.onerror = null;
-      modalImage.src = preview;
-    } : null;
-    modalImage.src = source.dataset.originalSrc || preview;
+    modalImage.src = preview;
+    if (source.dataset.originalSrc && preview !== new URL(source.dataset.originalSrc, location.href).href) {
+      const fullImage = new Image();
+      fullImage.onload = function () {
+        if (!modal.hidden && imageContext && imageContext.source === source) modalImage.src = fullImage.src;
+      };
+      fullImage.src = source.dataset.originalSrc;
+    }
     modalImage.alt = source.alt;
     const procedure = annotation && annotation.procedure;
     modal.classList.toggle("image-modal--with-procedure", Boolean(procedure));

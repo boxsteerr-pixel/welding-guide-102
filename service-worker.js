@@ -1,4 +1,4 @@
-const CACHE_NAME = "welding-guide-102-v23";
+const CACHE_NAME = "welding-guide-102-v24";
 const CACHE_PREFIX = "welding-guide-102-";
 const APP_ROOT = new URL("./", self.location.href);
 const CORE_ASSETS = [
@@ -10,7 +10,7 @@ const CORE_ASSETS = [
   "./css/style.css",
   "./css/style.css?v=14",
   "./js/app.js",
-  "./js/app.js?v=19",
+  "./js/app.js?v=20",
   "./js/update-state.js?v=2",
   "./data/manual.json",
   "./manifest.json",
@@ -28,14 +28,26 @@ self.addEventListener("install", function (event) {
 });
 
 self.addEventListener("activate", function (event) {
-  event.waitUntil(Promise.all([
-    self.clients.claim(),
-    caches.keys().then(function (names) {
-      return Promise.all(names.filter(function (name) {
-        return name.startsWith(CACHE_PREFIX) && name !== CACHE_NAME;
-      }).map(function (name) { return caches.delete(name); }));
-    })
-  ]));
+  event.waitUntil((async function () {
+    const current = await caches.open(CACHE_NAME);
+    const names = (await caches.keys()).filter(function (name) {
+      return name.startsWith(CACHE_PREFIX) && name !== CACHE_NAME;
+    });
+    for (const name of names) {
+      const previous = await caches.open(name);
+      let copied = true;
+      for (const request of await previous.keys()) {
+        if (request.destination !== "image" || await current.match(request)) continue;
+        const response = await previous.match(request);
+        if (response) {
+          try { await current.put(request, response); }
+          catch (error) { copied = false; }
+        }
+      }
+      if (copied) await caches.delete(name);
+    }
+    await self.clients.claim();
+  })());
 });
 
 async function networkFirst(request) {
@@ -57,10 +69,19 @@ async function networkFirst(request) {
 async function cacheFirst(request) {
   const cached = await (await caches.open(CACHE_NAME)).match(request);
   if (cached) return cached;
+  for (const name of await caches.keys()) {
+    if (!name.startsWith(CACHE_PREFIX) || name === CACHE_NAME) continue;
+    const previous = await (await caches.open(name)).match(request);
+    if (previous) return previous;
+  }
   const response = await fetch(request);
   if (isCacheable(response)) {
-    const cache = await caches.open(CACHE_NAME);
-    await cache.put(request, response.clone());
+    try {
+      const cache = await caches.open(CACHE_NAME);
+      await cache.put(request, response.clone());
+    } catch (error) {
+      // A full cache must not prevent an online image from displaying.
+    }
   }
   return response;
 }
