@@ -93,7 +93,9 @@
     button.className = "figure-preview";
     button.setAttribute("aria-label", `放大：${figure.caption}`);
     const image = document.createElement("img");
-    image.src = `./assets/images/emergency/${figure.image}.${asset.format || "jpg"}`;
+    const original = `./assets/images/emergency/${figure.image}.${asset.format || "jpg"}`;
+    image.src = asset.preview ? `./assets/images/emergency/${asset.preview}` : original;
+    if (asset.preview) image.dataset.originalSrc = original;
     image.width = asset.width;
     image.height = asset.height;
     image.loading = "lazy";
@@ -417,7 +419,12 @@
   function openImage(source, fromHistory, annotation) {
     imageContext = { source, annotation, x: window.scrollX, y: window.scrollY };
     imageHistoryClosing = false;
-    modalImage.src = source.currentSrc || source.src;
+    const preview = source.currentSrc || source.src;
+    modalImage.onerror = source.dataset.originalSrc ? function () {
+      modalImage.onerror = null;
+      modalImage.src = preview;
+    } : null;
+    modalImage.src = source.dataset.originalSrc || preview;
     modalImage.alt = source.alt;
     const procedure = annotation && annotation.procedure;
     modal.classList.toggle("image-modal--with-procedure", Boolean(procedure));

@@ -4,7 +4,7 @@
     "machineId": "102",
     "machineName": "102激光焊机",
     "manualTitle": "操作工快速处置手册",
-    "manualVersion": "0.2.0",
+    "manualVersion": "0.2.1",
     "contentStatus": "应急手顺",
     "lastUpdated": "2026-11-06"
   },
@@ -796,52 +796,64 @@
     },
     "valves-vertical-original": {
       "width": 3072,
-      "height": 4096
+      "height": 4096,
+      "preview": "valves-vertical-original-preview-v1.webp"
     },
     "valves-horizontal-original": {
       "width": 3072,
-      "height": 4096
+      "height": 4096,
+      "preview": "valves-horizontal-original-preview-v1.webp"
     },
     "parameters-original": {
       "width": 4096,
-      "height": 3072
+      "height": 3072,
+      "preview": "parameters-original-preview-v1.webp"
     },
     "cabinet-1-original": {
       "width": 4096,
-      "height": 3072
+      "height": 3072,
+      "preview": "cabinet-1-original-preview-v1.webp"
     },
     "cabinet-2-original": {
       "width": 4096,
-      "height": 3072
+      "height": 3072,
+      "preview": "cabinet-2-original-preview-v1.webp"
     },
     "dot-mode-original": {
       "width": 4096,
-      "height": 3072
+      "height": 3072,
+      "preview": "dot-mode-original-preview-v1.webp"
     },
     "limits-1-original": {
       "width": 4096,
-      "height": 3072
+      "height": 3072,
+      "preview": "limits-1-original-preview-v1.webp"
     },
     "limits-2-original": {
       "width": 4096,
-      "height": 3072
+      "height": 3072,
+      "preview": "limits-2-original-preview-v1.webp"
     },
     "nozzle-upper-original": {
       "width": 3072,
-      "height": 4096
+      "height": 4096,
+      "preview": "nozzle-upper-original-preview-v1.webp"
     },
     "nozzle-lower-original": {
       "width": 3072,
-      "height": 4096
+      "height": 4096,
+      "preview": "nozzle-lower-original-preview-v1.webp"
     },
     "chiller-doors-reference-original": {
       "width": 4096,
-      "height": 3072
+      "height": 3072,
+      "preview": "chiller-doors-reference-original-preview-v1.webp"
     },
     "table-annotated-reference": {
       "width": 1448,
       "height": 1086,
-      "format": "png"
+      "format": "png",
+      "preview": "table-annotated-reference-preview-v1.webp"
     }
   }
 }

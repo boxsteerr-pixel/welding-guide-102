@@ -14,7 +14,7 @@ const manifest = JSON.parse(manifestText);
 
 assert.equal(manual.machine.machineId, "102");
 assert.equal(manual.machine.machineName, "102激光焊机");
-assert.equal(manual.machine.manualVersion, "0.2.0");
+assert.equal(manual.machine.manualVersion, "0.2.1");
 assert.deepEqual(manual.faults.map(({id, page, steps}) => [id, page, steps.length]), [
   ["chiller-1-to-2", "1", 5], ["chiller-2-to-1", "2", 5],
   ["table-jam", "3", 6], ["focus-alignment", "4", 4],
@@ -51,7 +51,7 @@ assert.ok(manual.maintenance.every(item => manual.faults.some(procedure => proce
 assert.deepEqual(manual.safety, []);
 assert.equal(manifest.start_url, "./");
 assert.equal(manifest.scope, "./");
-assert.match(sw, /const CACHE_NAME = "welding-guide-102-v22"/);
+assert.match(sw, /const CACHE_NAME = "welding-guide-102-v23"/);
 for (const [, asset] of html.matchAll(/(?:src|href)="(\.\/[^"]+\?v=\d+)"/g)) {
   assert.ok(sw.includes(JSON.stringify(asset)), `离线缓存须包含 ${asset}`);
 }
