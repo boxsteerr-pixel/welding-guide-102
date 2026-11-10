@@ -141,6 +141,12 @@
       });
       caption.append(legend);
     }
+    if (figure.image === "table-annotated-reference") {
+      const instruction = document.createElement("p");
+      instruction.className = "figure-procedure-hint";
+      instruction.textContent = "点击下方图片，查看大图和完整处理步骤";
+      element.append(instruction);
+    }
     element.append(button, caption, retry);
     loadPreview();
     return element;
