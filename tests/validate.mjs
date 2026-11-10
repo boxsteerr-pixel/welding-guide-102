@@ -52,7 +52,7 @@ assert.deepEqual(manual.maintenance.map(({id, page, steps}) => [id, page, steps.
 assert.deepEqual(manual.safety, []);
 assert.equal(manifest.start_url, "./");
 assert.equal(manifest.scope, "./");
-assert.match(sw, /const CACHE_NAME = "welding-guide-102-v26"/);
+assert.match(sw, /const CACHE_NAME = "welding-guide-102-v27"/);
 for (const [, asset] of html.matchAll(/(?:src|href)="(\.\/[^"]+\?v=\d+)"/g)) {
   assert.ok(sw.includes(JSON.stringify(asset)), `离线缓存须包含 ${asset}`);
 }
