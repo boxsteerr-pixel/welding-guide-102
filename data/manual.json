@@ -789,12 +789,12 @@
     "valves-vertical-original": {
       "width": 3072,
       "height": 4096,
-      "preview": "valves-vertical-original-preview-v1.webp"
+      "preview": "valves-vertical-original-preview-mobile-v2.webp"
     },
     "valves-horizontal-original": {
       "width": 3072,
       "height": 4096,
-      "preview": "valves-horizontal-original-preview-v1.webp"
+      "preview": "valves-horizontal-original-preview-mobile-v2.webp"
     },
     "parameters-original": {
       "width": 4096,
@@ -819,12 +819,12 @@
     "limits-1-original": {
       "width": 4096,
       "height": 3072,
-      "preview": "limits-1-original-preview-v1.webp"
+      "preview": "limits-1-original-preview-mobile-v2.webp"
     },
     "limits-2-original": {
       "width": 4096,
       "height": 3072,
-      "preview": "limits-2-original-preview-v1.webp"
+      "preview": "limits-2-original-preview-mobile-v2.webp"
     },
     "nozzle-upper-original": {
       "width": 3072,
@@ -845,7 +845,7 @@
       "width": 1448,
       "height": 1086,
       "format": "png",
-      "preview": "table-annotated-reference-preview-v1.webp"
+      "preview": "table-annotated-reference-preview-mobile-v2.webp"
     }
   }
 }
