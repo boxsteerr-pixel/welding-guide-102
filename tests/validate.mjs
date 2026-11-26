@@ -54,7 +54,7 @@ assert.ok(manual.safety.every(item => item.steps.length === 1));
 assert.ok(html.includes("安全销位置识别"));
 assert.equal(manifest.start_url, "./");
 assert.equal(manifest.scope, "./");
-assert.match(sw, /const CACHE_NAME = "welding-guide-102-v28"/);
+assert.match(sw, /const CACHE_NAME = "welding-guide-102-v29"/);
 for (const [, asset] of html.matchAll(/(?:src|href)="(\.\/[^"]+\?v=\d+)"/g)) {
   assert.ok(sw.includes(JSON.stringify(asset)), `离线缓存须包含 ${asset}`);
 }

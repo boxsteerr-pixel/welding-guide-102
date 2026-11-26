@@ -347,7 +347,21 @@
     });
     if (!keywords.childNodes.length) keywords.append(text("内容录入后显示快捷关键词"));
     renderCollection("#maintenance-list", maintenance);
-    renderCollection("#safety-list", manual.safety);
+    const safetyList = document.querySelector("#safety-list");
+    safetyList.replaceChildren();
+    manual.safety.forEach(function (item, index) {
+      const card = document.createElement("article");
+      card.className = "safety-reminder";
+      const heading = document.createElement("h3");
+      heading.textContent = (index + 1) + ". 安全提醒";
+      card.append(heading);
+      (item.steps || []).forEach(function (step) {
+        const paragraph = document.createElement("p");
+        paragraph.textContent = step.text || "";
+        card.append(paragraph);
+      });
+      safetyList.append(card);
+    });
   }
 
   async function loadManual() {
