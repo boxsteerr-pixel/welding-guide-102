@@ -14,7 +14,7 @@ const manifest = JSON.parse(manifestText);
 
 assert.equal(manual.machine.machineId, "102");
 assert.equal(manual.machine.machineName, "102激光焊机");
-assert.equal(manual.machine.manualVersion, "0.2.2");
+assert.equal(manual.machine.manualVersion, "0.2.3");
 assert.deepEqual(manual.faults.map(({id, page, steps}) => [id, page, steps.length]), [
   ["chiller-1-to-2", "1", 5], ["chiller-2-to-1", "2", 5],
   ["table-jam", "3", 6], ["focus-alignment", "4", 4],
@@ -49,7 +49,9 @@ assert.equal(new Set(hashes).size, figureIds.size, "重复原图应复用资源"
 assert.deepEqual(manual.maintenance.map(({id, page, steps}) => [id, page, steps.length]), [
   ["clear-nozzle", "6", 8], ["coolant-refill", "7", 7]
 ]);
-assert.deepEqual(manual.safety, []);
+assert.equal(manual.safety.length, 9);
+assert.ok(manual.safety.every(item => item.steps.length === 1));
+assert.ok(html.includes("安全销位置识别"));
 assert.equal(manifest.start_url, "./");
 assert.equal(manifest.scope, "./");
 assert.match(sw, /const CACHE_NAME = "welding-guide-102-v28"/);

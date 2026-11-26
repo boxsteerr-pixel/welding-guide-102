@@ -4,7 +4,7 @@
     "machineId": "102",
     "machineName": "102激光焊机",
     "manualTitle": "操作工快速处置手册",
-    "manualVersion": "0.2.2",
+    "manualVersion": "0.2.3",
     "contentStatus": "应急手顺",
     "lastUpdated": "2026-11-06"
   },
@@ -728,7 +728,98 @@
       ]
     }
   ],
-  "safety": [],
+  "safety": [
+    {
+      "id": "safety-reminder-1",
+      "title": "安全提醒 1",
+      "steps": [
+        {
+          "title": "安全提醒",
+          "text": "禁止未停机、未确认安全状态进入焊机危险区域。"
+        }
+      ]
+    },
+    {
+      "id": "safety-reminder-2",
+      "title": "安全提醒 2",
+      "steps": [
+        {
+          "title": "安全提醒",
+          "text": "禁止用手直接清理夹钳、剪刃、焊接区域异物。"
+        }
+      ]
+    },
+    {
+      "id": "safety-reminder-3",
+      "title": "安全提醒 3",
+      "steps": [
+        {
+          "title": "安全提醒",
+          "text": "处理断丝、卡丝、废边、夹钳异常前必须确认设备停止。"
+        }
+      ]
+    },
+    {
+      "id": "safety-reminder-4",
+      "title": "安全提醒 4",
+      "steps": [
+        {
+          "title": "安全提醒",
+          "text": "严禁直视激光加工区域。"
+        }
+      ]
+    },
+    {
+      "id": "safety-reminder-5",
+      "title": "安全提醒 5",
+      "steps": [
+        {
+          "title": "安全提醒",
+          "text": "清理焊接区域必须佩戴防护手套和防护眼镜。"
+        }
+      ]
+    },
+    {
+      "id": "safety-reminder-6",
+      "title": "安全提醒 6",
+      "steps": [
+        {
+          "title": "安全提醒",
+          "text": "气体、冷却水、液压系统异常时不得强行焊接。"
+        }
+      ]
+    },
+    {
+      "id": "safety-reminder-7",
+      "title": "安全提醒 7",
+      "steps": [
+        {
+          "title": "安全提醒",
+          "text": "高风险设备异常不得强行复位或私自放行。"
+        }
+      ]
+    },
+    {
+      "id": "safety-reminder-8",
+      "title": "安全提醒 8",
+      "steps": [
+        {
+          "title": "安全提醒",
+          "text": "异常处理必须记录报警画面、现场状态和处理过程。"
+        }
+      ]
+    },
+    {
+      "id": "safety-reminder-9",
+      "title": "安全提醒 9",
+      "steps": [
+        {
+          "title": "安全提醒",
+          "text": "涉及激光源、液压、电气联锁的异常，必须通知专业人员处理。"
+        }
+      ]
+    }
+  ],
   "source": "《交C102焊机操作工应急操作手顺20261105.pdf》｜焊接管理组，原件落款 20261022",
   "quickKeywords": [
     "冷水机",
